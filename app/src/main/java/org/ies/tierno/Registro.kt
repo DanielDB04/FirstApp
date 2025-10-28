@@ -69,7 +69,7 @@ fun Registro() {
                 TextField(
                     value = nombreUsuario,
                     onValueChange = { newText -> nombreUsuario = newText },
-                    label = { Text("Nombre de usuario") },
+                    label = { Text("Nombre de Usuario") },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Filled.Person,
