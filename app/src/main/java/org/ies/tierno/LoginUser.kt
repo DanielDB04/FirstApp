@@ -75,7 +75,7 @@ fun LoginUser() {
                         .padding(bottom = 16.dp)
                 )
 
-                // CAMPO DE PASSWORD
+                // CAMPO DE Contra
                 TextField(
                     value = password,
                     onValueChange = { password = it },
