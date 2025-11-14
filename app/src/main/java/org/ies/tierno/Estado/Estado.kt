@@ -1,4 +1,4 @@
-package org.ies.tierno
+package org.ies.tierno.Estado
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

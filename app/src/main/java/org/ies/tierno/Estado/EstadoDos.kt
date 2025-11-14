@@ -1,4 +1,4 @@
-package org.ies.tierno
+package org.ies.tierno.Estado
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +21,7 @@ fun EstadoDos() {
     var textFieldValue by remember { mutableStateOf("")}
     var number1 by remember { mutableStateOf(0) }
     var number2 by remember { mutableStateOf(0) }
+    val sum by remember { derivedStateOf { number1 + number2} }
 
     Scaffold { innerPadding ->
         Column(
@@ -44,6 +45,7 @@ fun EstadoDos() {
                 text = "Res: ${number1 + number2}",
                 modifier = Modifier.padding(bottom = 16.dp)
             )
+            Text("Resultado con derivedStateOf: $sum")
         }
     }
 }
