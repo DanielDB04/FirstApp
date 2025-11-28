@@ -1,4 +1,4 @@
-package org.ies.tierno.ComponentesEstado
+package org.ies.tierno.navigation.presentation.ui.screens.ComponentesEstado
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

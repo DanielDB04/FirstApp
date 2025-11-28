@@ -1,4 +1,4 @@
-package org.ies.tierno
+package org.ies.tierno.navigation.presentation.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -1,6 +1,7 @@
-package org.ies.tierno
+package org.ies.tierno.navigation.presentation.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -11,61 +12,68 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.firstapp.R
+
+import com.example.proyectappdbd.Proyecto.navigation.presentation.viewmodel.LoginScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginUser() {
-    var nombreUsuario by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginUser(loginScreenViewModel: LoginScreenViewModel = viewModel()) {
+    val username by loginScreenViewModel.username.collectAsState()
+    val password by loginScreenViewModel.password.collectAsState()
     var passwordVisible by remember { mutableStateOf(false) }
-
+    val loginEnabled by remember {
+        derivedStateOf {
+            username.isNotBlank() && password.isNotBlank()
+        }
+    }
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Ventana de Login") }
-            )
-        },
         content = { innerPadding ->
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .background(Color(0xFFE3F2FD)) // Azul claro
+                    .padding(horizontal = 16.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
             ) {
 
-                // LOGO
+                // LOGO (ahora más arriba)
                 Image(
                     painter = painterResource(id = R.drawable.images),
                     contentDescription = "Logo de la aplicación",
                     modifier = Modifier
-                        .size(150.dp)
-
+                        .size(400.dp)
+                        .padding(bottom = 24.dp)
                 )
 
-                // TÍTULO
+                // TEXTO DE BIENVENIDA
                 Text(
-                    text = "Iniciar sesión",
+                    text = "Bienvenido a tu tienda de informática favorita",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    color = Color(0xFF0D47A1),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
                 )
 
                 // CAMPO DE USER
                 TextField(
-                    value = nombreUsuario,
-                    onValueChange = { nombreUsuario = it },
+                    value = username,
+                    onValueChange = { loginScreenViewModel.setUsername(it) },
                     label = { Text("Nombre de usuario") },
                     leadingIcon = {
                         Icon(
@@ -82,7 +90,7 @@ fun LoginUser() {
                 // CAMPO DE PASSWORD
                 TextField(
                     value = password,
-                    onValueChange = { newPassword -> password = newPassword },
+                    onValueChange = { loginScreenViewModel.setPassword(it) },
                     label = { Text("Contraseña") },
                     visualTransformation = if (passwordVisible)
                         VisualTransformation.None else PasswordVisualTransformation(),
@@ -110,25 +118,24 @@ fun LoginUser() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Button(onClick = {
-                        // Acción de login
-                    }) {
+                    Button(
+                        onClick = {
+                            // Acción de login
+                        }, enabled = loginEnabled,
+                    ) {
                         Text("Aceptar")
                     }
 
                     Button(
                         onClick = {
-                            nombreUsuario = ""
-                            password = ""
+                            loginScreenViewModel.clear()
                         },
                     ) {
                         Text("Limpiar")
                     }
 
                     OutlinedButton(
-                        onClick = {
-                            // Acción de registrarse
-                        }
+                        onClick = {}
                     ) {
                         Text("Registrarse")
                     }
@@ -140,6 +147,6 @@ fun LoginUser() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginUserPreview() {
+fun LoginPreview() {
     LoginUser()
 }

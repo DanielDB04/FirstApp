@@ -1,4 +1,4 @@
-package org.ies.tierno.Estado
+package org.ies.tierno.navigation.presentation.ui.screens.Estado
 
 
 import androidx.compose.foundation.background
